@@ -7,8 +7,12 @@ typedef struct
 
 typedef struct
 {
-    int pp, pm, pg;  //preço da hora dos tipos a b e c
+    float pp, pm, pg;  //preço da hora dos tipos a b e c
     int vagasp, vagasm, vagasg;  //numero de vagas de cada tipo
 }estacionamento;
+
+void es(estacionamento *definir);
+
+void menu();
 
 void addcarro();
