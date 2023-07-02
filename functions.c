@@ -12,44 +12,78 @@ void menu(estacionamento *definir, carro *carros){
     printf(" 1-adicionar carro \n 2-reservar vaga \n 3-ver vagas disponiveis \n 4-calcular preco\n");
     int selecao; // int para scanear oq o usuario quer fazer
     scanf("%d", &selecao);
-    switch (selecao)
-    {
-    case 1:
-        addcarro(&definir, carros);
-        break;
-    case 2:
-        //reservar();
-        break;
-    case 3:
-        //vagas();
-        break;
-    case 4:
-        //preco();
-        break;
-    default:
-        printf("digite um numero valido\n");
+    int index = 0; // index do vetor carros
+    if (selecao == 1) {
+        addcarro(&definir, carros, index);
+        index++;
+    } else if (selecao == 2) {
+        reservar(&definir, carros, index);
+        index++;
+    } else if (selecao == 3) {
+        vagas(&definir);
+    } else if (selecao == 4) {
+       // preco();
+    } else {
+        printf("Digite um número válido.\n");
         menu(&definir, carros);
-        break;
     }
+
 }
 
-void addcarro(estacionamento **definir, carro *carros){
+void addcarro(estacionamento **definir, carro *carros, int index){
     printf("qual o tipo do carro?");
     scanf(" %c", &carros->tipo);
-    carros->hora_entrada = tempo();
 
-    if (carros->tipo == 'p')
+    carros[index].hora_entrada = tempo();
+
+    printf("digite a placa do carro");
+    scanf(" %[^\n]", carros[index].placa);
+
+    if (carros[index].tipo == 'p')
     {
         (*definir)->vagasp -= 1;
     }
-    if (carros->tipo == 'm')
+    if (carros[index].tipo == 'm')
     {
         (*definir)->vagasm -= 1;
     }
-    if (carros->tipo == 'g')
+    if (carros[index].tipo == 'g')
     {
         (*definir)->vagasg -= 1;
     }
+    menu(*definir, carros);
+}
+
+void reservar(estacionamento **definir, carro *carros, int index){
+    printf("qual o tipo do carro?");
+    scanf(" %c", &carros[index].tipo);
+
+    printf("digite a placa do carro");
+    scanf(" %[^\n]", carros[index].placa);
+
+    int h, m; //horas e minutos para calcular no formato minutos
+    printf("digite as horas ex: 23:59");
+    scanf("%d:%d", &h, &m);
+
+    carros->hora_entrada = h * 60 + m;
+
+    if (carros[index].tipo == 'p')
+    {
+        (*definir)->vagasp -= 1;
+    }
+    if (carros[index].tipo == 'm')
+    {
+        (*definir)->vagasm -= 1;
+    }
+    if (carros[index].tipo == 'g')
+    {
+        (*definir)->vagasg -= 1;
+    }
+    menu(*definir, carros);
+}
+
+void vagas(estacionamento **definir){ //mostra as vagas que restam
+    printf("vagas p:%d\n vagas m:%d\n vagas g:%d", (*definir)->vagasp, (*definir)->vagasm, (*definir)->vagasg);
 }
 
 int tempo() {  //retornar o tempo em minutos para ser mais facil de calcular

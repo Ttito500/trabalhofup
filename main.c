@@ -12,6 +12,5 @@ int main()
 
     menu(&definir, carros);
 
-    printf("%d", definir.vagasm);
     return 0;
 }
