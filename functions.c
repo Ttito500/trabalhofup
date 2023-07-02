@@ -1,10 +1,17 @@
 #include <time.h>
 #include "def.h"
+#include <string.h>
 
 void es(estacionamento *definir){
-    printf("escreva o preco/h dos tipos p m e g respectivamente:");
-    scanf("%f %f %f", &definir->pp, &definir->pm, &definir->pg); //scaneando o preço de cada tipo
-    printf("escreva o numero de vagas dos tipos p m e g respectivamente:");
+    float pp, pm, pg;
+    printf("escreva o preco/h dos tipos p m e g respectivamente: \n");
+    scanf("%f %f %f", &pp, &pm, &pg); //scaneando o preço de cada tipo
+   
+    definir->pp = pp / 60;//transformando preco/h em preço/min
+    definir->pm = pm / 60;
+    definir->pg = pg / 60;
+
+    printf("escreva o numero de vagas dos tipos p m e g respectivamente: \n");
     scanf("%d %d %d", &definir->vagasp, &definir->vagasm, &definir->vagasg); // numero de vagas de cada tipo
 }
 
@@ -20,23 +27,23 @@ void menu(estacionamento *definir, carro *carros){
         reservar(&definir, carros, index);
         index++;
     } else if (selecao == 3) {
-        vagas(&definir);
+        vagas(&definir, carros);
     } else if (selecao == 4) {
-       // preco();
+       preco(&definir, carros, index);
     } else {
-        printf("Digite um número válido.\n");
+        printf("Digite um numero valido.\n");
         menu(&definir, carros);
     }
 
 }
 
 void addcarro(estacionamento **definir, carro *carros, int index){
-    printf("qual o tipo do carro?");
+    printf("qual o tipo do carro? \n");
     scanf(" %c", &carros->tipo);
 
     carros[index].hora_entrada = tempo();
 
-    printf("digite a placa do carro");
+    printf("digite a placa do carro \n");
     scanf(" %[^\n]", carros[index].placa);
 
     if (carros[index].tipo == 'p')
@@ -55,14 +62,14 @@ void addcarro(estacionamento **definir, carro *carros, int index){
 }
 
 void reservar(estacionamento **definir, carro *carros, int index){
-    printf("qual o tipo do carro?");
+    printf("qual o tipo do carro? \n");
     scanf(" %c", &carros[index].tipo);
 
-    printf("digite a placa do carro");
+    printf("digite a placa do carro \n");
     scanf(" %[^\n]", carros[index].placa);
 
     int h, m; //horas e minutos para calcular no formato minutos
-    printf("digite as horas ex: 23:59");
+    printf("digite as horas ex: 23:59 \n");
     scanf("%d:%d", &h, &m);
 
     carros->hora_entrada = h * 60 + m;
@@ -82,8 +89,35 @@ void reservar(estacionamento **definir, carro *carros, int index){
     menu(*definir, carros);
 }
 
-void vagas(estacionamento **definir){ //mostra as vagas que restam
-    printf("vagas p:%d\n vagas m:%d\n vagas g:%d", (*definir)->vagasp, (*definir)->vagasm, (*definir)->vagasg);
+void vagas(estacionamento **definir, carro *carros){ //mostra as vagas que restam
+    printf("vagas p:%d vagas m:%d vagas g:%d \n", (*definir)->vagasp, (*definir)->vagasm, (*definir)->vagasg);
+    menu(&definir, carros);
+}
+
+void preco(estacionamento **definir, carro *carros, int index){
+    char placa[11];
+    printf("qual a placa? \n");
+    scanf(" %[^\n]", placa);
+    for(int i = 0; i < index; i++){
+        if(strcmp(placa, carros[i].placa) == 0){
+            float preco;
+            if (carros[i].tipo == 'p')
+            {
+                preco = (*definir)->pp * (tempo() - carros[i].hora_entrada);
+            }else if (carros[i].tipo == 'm')
+            {
+                preco = (*definir)->pm * (tempo() - carros[i].hora_entrada);
+            }else if (carros[i].tipo == 'g')
+            {
+                preco = (*definir)->pg * (tempo() - carros[i].hora_entrada);
+            }else{
+                printf("nao encontrado \n");
+            }
+            printf("%.2f\n", preco);
+            break;
+        }
+    }
+    menu(&definir, carros);
 }
 
 int tempo() {  //retornar o tempo em minutos para ser mais facil de calcular
