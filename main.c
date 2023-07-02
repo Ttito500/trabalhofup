@@ -8,8 +8,10 @@ int main()
     es(&definir); // função para definir o estacionamento
 
     int n = definir.vagasp + definir.vagasm + definir.vagasg;
-    carro *num = (int*)malloc(n*sizeof(int)); //alocação dinamica do vetor dos carros
+    carro *carros = (int*)malloc(n*sizeof(int)); //alocação dinamica do vetor dos carros
 
-    menu();
+    menu(&definir, carros);
+
+    printf("%d", definir.vagasm);
     return 0;
 }

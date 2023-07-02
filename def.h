@@ -13,8 +13,8 @@ typedef struct
 
 void es(estacionamento *definir);
 
-void menu();
+void menu(estacionamento *definir, carro *carros);
 
-void addcarro();
+void addcarro(estacionamento **definir, carro *carros);
 
 int tempo();

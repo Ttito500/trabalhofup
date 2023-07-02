@@ -3,19 +3,19 @@
 
 void es(estacionamento *definir){
     printf("escreva o preco/h dos tipos p m e g respectivamente:");
-    scanf("%f %f %f", &(*definir).pp, &(*definir).pm, &(*definir).pg); //scaneando o preço de cada tipo
+    scanf("%f %f %f", &definir->pp, &definir->pm, &definir->pg); //scaneando o preço de cada tipo
     printf("escreva o numero de vagas dos tipos p m e g respectivamente:");
-    scanf("%d %d %d", &(*definir).vagasp, &(*definir).vagasm, &(*definir).vagasg); // numero de vagas de cada tipo
+    scanf("%d %d %d", &definir->vagasp, &definir->vagasm, &definir->vagasg); // numero de vagas de cada tipo
 }
 
-void menu(){
+void menu(estacionamento *definir, carro *carros){
     printf(" 1-adicionar carro \n 2-reservar vaga \n 3-ver vagas disponiveis \n 4-calcular preco\n");
     int selecao; // int para scanear oq o usuario quer fazer
     scanf("%d", &selecao);
     switch (selecao)
     {
     case 1:
-        addcarro();
+        addcarro(&definir, carros);
         break;
     case 2:
         //reservar();
@@ -28,15 +28,28 @@ void menu(){
         break;
     default:
         printf("digite um numero valido\n");
-        menu();
+        menu(&definir, carros);
         break;
     }
 }
 
-void addcarro(){
+void addcarro(estacionamento **definir, carro *carros){
     printf("qual o tipo do carro?");
-    //char tipo;
-   //scanf("%c", &)
+    scanf(" %c", &carros->tipo);
+    carros->hora_entrada = tempo();
+
+    if (carros->tipo == 'p')
+    {
+        (*definir)->vagasp -= 1;
+    }
+    if (carros->tipo == 'm')
+    {
+        (*definir)->vagasm -= 1;
+    }
+    if (carros->tipo == 'g')
+    {
+        (*definir)->vagasg -= 1;
+    }
 }
 
 int tempo() {  //retornar o tempo em minutos para ser mais facil de calcular
