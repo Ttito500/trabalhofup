@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "def.h"
 
 void es(estacionamento *definir){
@@ -36,4 +37,11 @@ void addcarro(){
     printf("qual o tipo do carro?");
     //char tipo;
    //scanf("%c", &)
+=======
+#include "def.h"
+
+void addcarro(){
+    printf("qual o tipo do carro?");
+    scanf("%d", &)
+>>>>>>> 714fe53aaca705c9386767c24a3b143fbd10e22a
 }
