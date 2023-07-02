@@ -1,11 +1,11 @@
-<<<<<<< HEAD
+#include <time.h>
 #include "def.h"
 
 void es(estacionamento *definir){
     printf("escreva o preco/h dos tipos p m e g respectivamente:");
-    scanf("%f %f %f", &(*definir).pp, &(*definir).pm, &(*definir).pg);
+    scanf("%f %f %f", &(*definir).pp, &(*definir).pm, &(*definir).pg); //scaneando o preço de cada tipo
     printf("escreva o numero de vagas dos tipos p m e g respectivamente:");
-    scanf("%d %d %d", &(*definir).vagasp, &(*definir).vagasm, &(*definir).vagasg);
+    scanf("%d %d %d", &(*definir).vagasp, &(*definir).vagasm, &(*definir).vagasg); // numero de vagas de cada tipo
 }
 
 void menu(){
@@ -37,11 +37,21 @@ void addcarro(){
     printf("qual o tipo do carro?");
     //char tipo;
    //scanf("%c", &)
-=======
-#include "def.h"
+}
 
-void addcarro(){
-    printf("qual o tipo do carro?");
-    scanf("%d", &)
->>>>>>> 714fe53aaca705c9386767c24a3b143fbd10e22a
+int tempo() {  //retornar o tempo em minutos para ser mais facil de calcular
+    // Obter o tempo atual
+   time_t tempoAtual = time(NULL);
+
+    // Converter o tempo para uma estrutura de tempo local
+    struct tm *infoTempo = localtime(&tempoAtual);
+
+    // Extrair a hora e os minutos da estrutura de tempo
+    int hora = infoTempo->tm_hour;
+    int minutos = infoTempo->tm_min;
+
+    // Calcular a quantidade de minutos passados desde a meia-noite
+    int minutosPassados = hora * 60 + minutos;
+
+    return minutosPassados;
 }
