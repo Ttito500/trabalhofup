@@ -22,6 +22,6 @@ void reservar(estacionamento **definir, carro *carros, int index);
 
 void vagas(estacionamento **definir, carro *carros);
 
-void preco(estacionamento **definir, carro *carros, int index);
+void preco(estacionamento **definir, carro *carros, int *index);
 
 int tempo();

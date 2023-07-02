@@ -16,20 +16,22 @@ void es(estacionamento *definir){
 }
 
 void menu(estacionamento *definir, carro *carros){
+    printf("|||%d %d %d|||\n", definir->vagasp, definir->vagasm, definir->vagasg);
+
     printf(" 1-adicionar carro \n 2-reservar vaga \n 3-ver vagas disponiveis \n 4-calcular preco\n");
     int selecao; // int para scanear oq o usuario quer fazer
     scanf("%d", &selecao);
     int index = 0; // index do vetor carros
     if (selecao == 1) {
+        index++;
         addcarro(&definir, carros, index);
-        index++;
     } else if (selecao == 2) {
-        reservar(&definir, carros, index);
         index++;
+        reservar(&definir, carros, index);
     } else if (selecao == 3) {
         vagas(&definir, carros);
     } else if (selecao == 4) {
-       preco(&definir, carros, index);
+       preco(&definir, carros, &index);
     } else {
         printf("Digite um numero valido.\n");
         menu(&definir, carros);
@@ -72,7 +74,7 @@ void reservar(estacionamento **definir, carro *carros, int index){
     printf("digite as horas ex: 23:59 \n");
     scanf("%d:%d", &h, &m);
 
-    carros->hora_entrada = h * 60 + m;
+    carros[index].hora_entrada = h * 60 + m;
 
     if (carros[index].tipo == 'p')
     {
@@ -91,33 +93,37 @@ void reservar(estacionamento **definir, carro *carros, int index){
 
 void vagas(estacionamento **definir, carro *carros){ //mostra as vagas que restam
     printf("vagas p:%d vagas m:%d vagas g:%d \n", (*definir)->vagasp, (*definir)->vagasm, (*definir)->vagasg);
-    menu(&definir, carros);
+    menu(*definir, carros);
 }
 
-void preco(estacionamento **definir, carro *carros, int index){
+void preco(estacionamento **definir, carro *carros, int *index){
     char placa[11];
     printf("qual a placa? \n");
     scanf(" %[^\n]", placa);
-    for(int i = 0; i < index; i++){
+    float preco = 0;
+    int numv = (*definir)->vagasp + (*definir)->vagasm + (*definir)->vagasg;
+    for(int i = 0; i < numv; i++){
         if(strcmp(placa, carros[i].placa) == 0){
-            float preco;
+            *index++;
             if (carros[i].tipo == 'p')
             {
                 preco = (*definir)->pp * (tempo() - carros[i].hora_entrada);
+                (*definir)->vagasp += 1;
             }else if (carros[i].tipo == 'm')
             {
                 preco = (*definir)->pm * (tempo() - carros[i].hora_entrada);
+                (*definir)->vagasm += 1;
             }else if (carros[i].tipo == 'g')
             {
                 preco = (*definir)->pg * (tempo() - carros[i].hora_entrada);
-            }else{
-                printf("nao encontrado \n");
+                (*definir)->vagasg += 1;
             }
             printf("%.2f\n", preco);
             break;
         }
     }
-    menu(&definir, carros);
+    printf("nao encontrado");
+    menu(*definir, carros);
 }
 
 int tempo() {  //retornar o tempo em minutos para ser mais facil de calcular
