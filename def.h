@@ -12,16 +12,16 @@ typedef struct
     int vagasp, vagasm, vagasg;  //numero de vagas de cada tipo
 }estacionamento;
 
-void es(estacionamento *definir);
+void es(estacionamento *definir);  //guarda as informaçôes sobre o estacionamento
 
-void menu(estacionamento *definir, carro *carros);
+void menu(estacionamento *definir, carro *carros); // menu
 
-void addcarro(estacionamento **definir, carro *carros);
+void addcarro(estacionamento **definir, carro *carros); // adciona um carro ao array dos carros usando  time.h para hora de entrada
 
-void reservar(estacionamento **definir, carro *carros);
+void reservar(estacionamento **definir, carro *carros); // reserva uma vaga tendo que receber a hora de entrada
 
-void vagas(estacionamento **definir, carro *carros);
+void vagas(estacionamento **definir, carro *carros); // lê o numero restante de vagas de cada tipo
 
-void preco(estacionamento **definir, carro *carros);
+void preco(estacionamento **definir, carro *carros); // checkout, procurando no array pela placa
 
-int tempo();
+int tempo(); // devolve o tempo atual em minutos, usada para os calculos
