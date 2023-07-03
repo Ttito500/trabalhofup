@@ -16,18 +16,16 @@ void es(estacionamento *definir){
 }
 
 void menu(estacionamento *definir, carro *carros){
-    printf("|||%d %d %d|||\n", definir->vagasp, definir->vagasm, definir->vagasg);
+    printf("|||%d %d %d|||\n", definir->vagasp, definir->vagasm, definir->vagasg); // isso ta aqui so pra testa
 
     printf(" 1-adicionar carro \n 2-reservar vaga \n 3-ver vagas disponiveis \n 4-calcular preco\n");
     int selecao; // int para scanear oq o usuario quer fazer
     scanf("%d", &selecao);
     int index = 0; // index do vetor carros
-    if (selecao == 1) {
-        index++;
-        addcarro(&definir, carros, index);
+    if (selecao == 1) {                     //inputs do usuario
+        addcarro(&definir, carros, &index); //chamada da função de acordo com o input
     } else if (selecao == 2) {
-        index++;
-        reservar(&definir, carros, index);
+        reservar(&definir, carros, &index);
     } else if (selecao == 3) {
         vagas(&definir, carros);
     } else if (selecao == 4) {
@@ -39,55 +37,58 @@ void menu(estacionamento *definir, carro *carros){
 
 }
 
-void addcarro(estacionamento **definir, carro *carros, int index){
+void addcarro(estacionamento **definir, carro *carros, int *index){
     printf("qual o tipo do carro? \n");
-    scanf(" %c", &carros->tipo);
+    scanf(" %c", &carros[*index].tipo);
 
-    carros[index].hora_entrada = tempo();
+    carros[*index].hora_entrada = tempo();
 
     printf("digite a placa do carro \n");
-    scanf(" %[^\n]", carros[index].placa);
+    scanf(" %[^\n]", carros[*index].placa);
 
-    if (carros[index].tipo == 'p')
+    if (carros[*index].tipo == 'p')
     {
         (*definir)->vagasp -= 1;
     }
-    if (carros[index].tipo == 'm')
+    if (carros[*index].tipo == 'm')
     {
         (*definir)->vagasm -= 1;
     }
-    if (carros[index].tipo == 'g')
+    if (carros[*index].tipo == 'g')
     {
         (*definir)->vagasg -= 1;
     }
+    *index++;
     menu(*definir, carros);
+    
 }
 
-void reservar(estacionamento **definir, carro *carros, int index){
+void reservar(estacionamento **definir, carro *carros, int *index){
     printf("qual o tipo do carro? \n");
-    scanf(" %c", &carros[index].tipo);
+    scanf(" %c", &carros[*index].tipo);
 
     printf("digite a placa do carro \n");
-    scanf(" %[^\n]", carros[index].placa);
+    scanf(" %[^\n]", carros[*index].placa);
 
     int h, m; //horas e minutos para calcular no formato minutos
     printf("digite as horas ex: 23:59 \n");
     scanf("%d:%d", &h, &m);
 
-    carros[index].hora_entrada = h * 60 + m;
+    carros[*index].hora_entrada = h * 60 + m;
 
-    if (carros[index].tipo == 'p')
+    if (carros[*index].tipo == 'p')
     {
         (*definir)->vagasp -= 1;
     }
-    if (carros[index].tipo == 'm')
+    if (carros[*index].tipo == 'm')
     {
         (*definir)->vagasm -= 1;
     }
-    if (carros[index].tipo == 'g')
+    if (carros[*index].tipo == 'g')
     {
         (*definir)->vagasg -= 1;
     }
+    *index++;
     menu(*definir, carros);
 }
 

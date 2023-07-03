@@ -16,9 +16,9 @@ void es(estacionamento *definir);
 
 void menu(estacionamento *definir, carro *carros);
 
-void addcarro(estacionamento **definir, carro *carros, int index);
+void addcarro(estacionamento **definir, carro *carros, int *index);
 
-void reservar(estacionamento **definir, carro *carros, int index);
+void reservar(estacionamento **definir, carro *carros, int *index);
 
 void vagas(estacionamento **definir, carro *carros);
 
