@@ -16,12 +16,12 @@ void es(estacionamento *definir);
 
 void menu(estacionamento *definir, carro *carros);
 
-void addcarro(estacionamento **definir, carro *carros, int *index);
+void addcarro(estacionamento **definir, carro *carros);
 
-void reservar(estacionamento **definir, carro *carros, int *index);
+void reservar(estacionamento **definir, carro *carros);
 
 void vagas(estacionamento **definir, carro *carros);
 
-void preco(estacionamento **definir, carro *carros, int *index);
+void preco(estacionamento **definir, carro *carros);
 
 int tempo();
